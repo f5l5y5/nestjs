@@ -13,7 +13,7 @@ async function bootstrap() {
       secret: 'yinuo',
       rolling: true,
       name: 'yn-ssid',
-      cookie: { maxAge: 9999999999 },
+      cookie: { maxAge: null },
     }),
   );
   await app.listen(3000);

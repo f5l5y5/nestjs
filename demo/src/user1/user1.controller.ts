@@ -21,6 +21,14 @@ import { UpdateUser1Dto } from './dto/update-user1.dto';
 export class User1Controller {
   constructor(private readonly user1Service: User1Service) {}
 
+  @Post('createCode')
+  createCode() {
+    return {
+      code: 200,
+      message: '成功',
+    };
+  }
+
   @Get('getList/:id')
   @HttpCode(304)
   getList(
