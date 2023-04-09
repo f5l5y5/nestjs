@@ -39,79 +39,65 @@ Greeter类不再需要知道它的使用者是谁，而是从外部注入到App�
  */
 /** ==============    =================== */
 
-class A{
-	name: string
-	
-	constructor(name: string) {
-		this.name = name
-	}
-
-}
-
-
-class B {
-	age: number
-	entry: A
-	constructor(age: number) {
-		this.age = age
-		this.entry = new A('哈哈哈 强耦合')
-	}
-}
-
-const b = new B(18)
-console.log(b.entry.name)
-
-
-
-
 // class A{
-// 	 name: string
+// 	name: string
 // 	constructor(name: string) {
 // 		this.name = name
 // 	}
-
 // }
 
 
-// class C{
-// 	 name:string
-// 	constructor(name: string) {
-// 		 this.name = name
-// 	 }
-// }
-
-// class Container{
-// 	modules: any
-// 	constructor() {
-// 		this.modules = {}
-// 	}
-// 	provide(key: string, module: any) {
-// 		this.modules[key]=module
-// 	}
-
-// 	get(key:string) {
-// 		return this.modules[key]
-// 	}
-
-// }
-
-
-// const container = new Container()
-// // 依赖注入
-// container.provide('a', new A('jack'))
-// container.provide('c', new C('mark'))
-
-// // 定义
 // class B {
-// 	a: any
-// 	c: any
-// 	constructor(container: Container) {
-// 		this.a = container.get('a')
-// 		this.c = container.get('c')
+// 	entry: A
+// 	constructor() {
+// 		this.entry = new A('哈哈哈 强耦合')
 // 	}
 // }
 
-// const b = new B(container) 
-// console.log(b.a)
+// const b = new B()
+// console.log(b.entry.name)
+
+
+
+
+class A{
+	 name: string
+	constructor(name: string) {
+		this.name = name
+	}
+}
+
+
+//中间件用于解耦
+class Container{
+	modules:any
+	constructor() {
+		this.modules = {}
+	}
+	provide(key: string, module: any) {
+		this.modules[key]=module
+	}
+
+	get(key:string) {
+		return this.modules[key]
+	}
+
+}
+
+
+const container = new Container()
+// 依赖注入
+container.provide('a', new A('jack'))
+
+// 定义B的使用类
+class B {
+	a: any
+	constructor(container: Container) {
+		this.a = container.get('a')
+	}
+}
+
+const b = new B(container) 
+console.log(b.a.name)
 
 
