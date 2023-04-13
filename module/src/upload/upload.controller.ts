@@ -8,6 +8,7 @@ import {
   Delete,
   UploadedFile,
   UseInterceptors,
+  Res,
 } from '@nestjs/common';
 import { UploadService } from './upload.service';
 import { CreateUploadDto } from './dto/create-upload.dto';
@@ -18,6 +19,9 @@ import {
 } from '@nestjs/platform-express/multer';
 import { diskStorage } from 'multer';
 import { extname, join } from 'path';
+import { Response } from 'express';
+import * as fs from 'fs';
+import { zip } from 'compressing';
 
 @Controller('upload')
 export class UploadController {
@@ -41,6 +45,26 @@ export class UploadController {
   upload(@UploadedFile() file) {
     console.log(file);
     return true;
+  }
+
+  @Get('download')
+  download(@Res() res: Response) {
+    console.log('打印***res', res);
+    const url = join(__dirname, '../images/1681344671860.png');
+    res.download(url);
+  }
+
+  @Get('stream')
+  async down(@Res() res: Response) {
+    const url = join(__dirname, '../images/1681344671860.png');
+    // const tarStream = new zip.Stream();
+    // await tarStream.addEntry(url);
+    // res.setHeader('Content-Type', 'application/octet-stream');
+    // tarStream.pipe(res);
+
+    const readStream = fs.createReadStream(url);
+    res.setHeader('Content-Type', 'application/octet-stream');
+    readStream.pipe(res);
   }
 
   @Post()
