@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 // import { NextFunction, Response, Request } from 'express';
 import { AppModule } from './app.module';
 import * as cors from 'cors';
+import { Response } from './common/response';
 
 // const whiteList = ['/user'];
 
@@ -20,6 +21,7 @@ import * as cors from 'cors';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(cors());
+  app.useGlobalInterceptors(new Response());
   // app.use(middlewareWhole); // 不需要调用
   await app.listen(3000);
 }
