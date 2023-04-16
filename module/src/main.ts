@@ -4,6 +4,7 @@ import { AppModule } from './app.module';
 import * as cors from 'cors';
 // import { Response } from './common/response';
 import { HttpFilter } from './common/filter';
+import { ValidationPipe } from '@nestjs/common';
 // const whiteList = ['/user'];
 
 // function middlewareWhole(req: Request, res: Response, next: NextFunction) {
@@ -22,8 +23,9 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(cors());
   // app.useGlobalInterceptors(new Response());
-  app.useGlobalFilters(new HttpFilter());
+  // app.useGlobalFilters(new HttpFilter());
   // app.use(middlewareWhole); // 不需要调用
+  app.useGlobalPipes(new ValidationPipe());
   await app.listen(3000);
 }
 bootstrap();
