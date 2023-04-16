@@ -8,6 +8,8 @@ import { UploadModule } from './upload/upload.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { LoginModule } from './login/login.module';
+import { SpiderModule } from './spider/spider.module';
+import { GuardModule } from './guard/guard.module';
 
 @Module({
   imports: [
@@ -25,6 +27,8 @@ import { LoginModule } from './login/login.module';
     ConfigModule.forRoot({ path: '/666' }),
     UploadModule,
     LoginModule,
+    SpiderModule,
+    GuardModule,
   ],
   controllers: [AppController],
   providers: [AppService],

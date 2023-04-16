@@ -3,9 +3,10 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as cors from 'cors';
 // import { Response } from './common/response';
-import { HttpFilter } from './common/filter';
+// import { HttpFilter } from './common/filter';
 import { ValidationPipe } from '@nestjs/common';
 // const whiteList = ['/user'];
+// import { RoleGuard } from './guard/role.guard';
 
 // function middlewareWhole(req: Request, res: Response, next: NextFunction) {
 //   console.log('打印***req.originalUrl', req.originalUrl);
@@ -26,6 +27,7 @@ async function bootstrap() {
   // app.useGlobalFilters(new HttpFilter());
   // app.use(middlewareWhole); // 不需要调用
   app.useGlobalPipes(new ValidationPipe());
+  // app.useGlobalGuards(new RoleGuard());
   await app.listen(3000);
 }
 bootstrap();
