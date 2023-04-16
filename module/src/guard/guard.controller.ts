@@ -7,14 +7,24 @@ import {
   Param,
   Delete,
   UseGuards,
-  SetMetadata,
 } from '@nestjs/common';
 import { GuardService } from './guard.service';
 import { CreateGuardDto } from './dto/create-guard.dto';
 import { UpdateGuardDto } from './dto/update-guard.dto';
 import { RoleGuard } from './role.guard';
+import { Role, MyParam } from './role.decorator';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
 @Controller('guard')
+@ApiTags('守卫接口') // 分组
+@ApiBearerAuth()
 @UseGuards(RoleGuard)
 export class GuardController {
   constructor(private readonly guardService: GuardService) {}
@@ -25,12 +35,26 @@ export class GuardController {
   }
 
   @Get()
-  @SetMetadata('role', ['admin']) // 自定义名称 数据
-  findAll() {
+  @Role('admin') // 自定义名称 数据
+  @ApiOperation({ summary: 'get接口', description: '角色' })
+  @ApiQuery({
+    name: 'page',
+    description: '分页信息',
+    required: true,
+    type: String,
+  })
+  @ApiResponse({ status: 403, description: '88' })
+  findAll(@MyParam() param: string) {
+    console.log('打印***param', param);
     return this.guardService.findAll();
   }
 
   @Get(':id')
+  @ApiParam({
+    name: 'id',
+    description: '获取单个数据',
+    required: true,
+  })
   findOne(@Param('id') id: string) {
     return this.guardService.findOne(+id);
   }

@@ -9,7 +9,7 @@ export class RoleGuard implements CanActivate {
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
-    console.log('打印***context 守卫', context);
+    // console.log('打印***context 守卫', context);
     const admin = this.reflector.get<string[]>('role', context.getHandler()); // [ 'admin' ]
     // ?role=admin 进行定义 有就访问
     const req = context.switchToHttp().getRequest<Request>();

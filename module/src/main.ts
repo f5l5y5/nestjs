@@ -7,6 +7,7 @@ import * as cors from 'cors';
 import { ValidationPipe } from '@nestjs/common';
 // const whiteList = ['/user'];
 // import { RoleGuard } from './guard/role.guard';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 // function middlewareWhole(req: Request, res: Response, next: NextFunction) {
 //   console.log('打印***req.originalUrl', req.originalUrl);
@@ -23,6 +24,14 @@ import { ValidationPipe } from '@nestjs/common';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(cors());
+  const options = new DocumentBuilder()
+    .addBearerAuth()
+    .setTitle('接口文档')
+    .setDescription('描述信息')
+    .setVersion('1.0.0')
+    .build();
+  const document = SwaggerModule.createDocument(app, options);
+  SwaggerModule.setup('/api-docs', app, document);
   // app.useGlobalInterceptors(new Response());
   // app.useGlobalFilters(new HttpFilter());
   // app.use(middlewareWhole); // 不需要调用
