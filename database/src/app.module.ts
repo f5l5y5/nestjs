@@ -3,6 +3,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TestModule } from './test/test.module';
+import { UserModule } from './user/user.module';
+import { TagsModule } from './tags/tags.module';
 
 @Module({
   imports: [
@@ -20,6 +22,8 @@ import { TestModule } from './test/test.module';
       autoLoadEntities: true, //如果为true,将自动加载实体 forFeature()方法注册的每个实体都将自动添加到配置对象的实体数组中
     }),
     TestModule,
+    UserModule,
+    TagsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
